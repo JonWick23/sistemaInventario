@@ -1,0 +1,128 @@
+<!DOCTYPE DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Compras</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="compras.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div class="logo">COMPRAS</div>
+            <ul class="menu">
+                <li><a href="#">INICIO</a></li>
+                <li><a href="#">INVENTARIO</a></li>
+                <li><a href="ventas.html">VENTAS</a></li>
+                <li><a href="#">PROVEEDORES</a></li>
+                <li><a href="#">ACERCA DE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="scroll"></div>
+
+    <div class="informacion">
+        <div class="cuadro1">
+            <span class="icono-producto"><i class="fas fa-box"></i></span>
+            <h2>Total de Ventas</h2>
+            <p>3</p>
+            <p>10 unidades vendidas</p>
+        </div>
+        <div class="cuadro2">
+            <span class="icono-dolar">$</span>
+            <h2>Monto total</h2>
+            <p>Valor total estimado</p>
+            <p id="totalCompras"></p>
+        </div>
+        <div class="cuadro3">
+            <h2>Total de Ventas</h2>
+            <p>3</p>
+            <p>10 unidades vendidas</p>
+        </div>
+    </div>
+
+    <button id="btnAbrirFormulario">+ NUEVA COMPRA</button>
+    <div id="modalOverlay" class="modal-overlay">
+        <form action="compras_registro.php" method="POST" id="formularioCompras">
+            <span id="btnCerrarModal" class="cerrar-modal">&times;</span>
+            <div class="campo">
+                <label for="id_compra">ID DE COMPRA:</label>
+                <input type="number" id="id_compra" name="id_compra" value="" required>
+            </div>
+            <div class="campo">
+                <label for="id_articulo">ID DE ARTICULO:</label>
+                <input type="number" id="id_articulo" name="id_articulo" value="" required>
+            </div>
+            <div class="campo">
+                <label for="id_proveedor">ID DE PROVEEDOR:</label>
+                <input type="number" id="id_proveedor" name="id_proveedor" value="" required>
+            </div>
+            <div class="campo">
+                <label for="nom_articulo">NOMBRE DE ARTICULO:</label>
+                <input type="text" id="nom_articulo" name="nom_articulo" value="" required>
+            </div>
+            <div class="campo">
+                <label for="cantidad">CANTIDAD:</label>
+                <input type="text" id="cantidad" name="cantidad" value="" required>
+            </div>
+            <div class="campo">
+                <label for="pre_unitario">PRECIO UNITARIO:</label>
+                <input type="number" id="pre_unitario" name="pre_unitario" step="0.01" value="" required>
+            </div>
+            <div class="campo">
+                <label for="total">TOTAL:</label>
+                <input type="number" id="total" name="total" step="0.01" value="" required>
+            </div>
+            <div class="campo">
+                <label for="fecha_compra">FECHA COMPRA:</label>
+                <input type="date" id="fecha_compra" name="fecha_compra" value="" required>
+            </div>
+            <div class="campo"></div> 
+            <input type="submit" value="REGISTRAR">
+        </form>
+    </div>
+    
+    
+    <br>
+
+        <div class="table-container" id="tabla1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID COMPRA</th>
+                        <th>ID ARTÍCULO</th>
+                        <th>ID PROVEEDOR</th>
+                        <th>NOMBRE ARTÍCULO</th>
+                        <th>CANTIDAD</th>
+                        <th>PRECIO UNITARIO</th>
+                        <th>TOTAL</th>
+                        <th>FECHA COMPRA</th>
+                        <th class="acciones">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCompraBody">
+                </tbody>
+            </table>
+        </div>
+        
+    
+    <button id="descargarPDF" onclick="generarPDF()">DESCARGAR PDF</button> 
+
+    <div class="scroll"></div> 
+    <script src="g.js"></script>
+    <script src="com.js"></script>
+</body>
+</html>
