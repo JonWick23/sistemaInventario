@@ -3,7 +3,7 @@ function conectar(){
     $host="localhost";
     $user="root";
     $pass="";
-    $bd="inventario";
+    $bd="sistemaInventario";
 
     $con=mysqli_connect($host,$user,$pass);
 

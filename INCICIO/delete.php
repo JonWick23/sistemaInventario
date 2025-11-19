@@ -3,9 +3,9 @@
 include("conexion.php");
 $con=conectar();
 
-$id_producto=$_GET['id'];
+$id_productos=$_GET['id'];
 
-$sql="DELETE FROM producto WHERE id_producto='$id_producto'";
+$sql="DELETE FROM Productos WHERE id_productos='$id_productos'";
 $query=mysqli_query($con,$sql);
 
     if($query){

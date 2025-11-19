@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 include("conexion.php");
 $con = conectar();
 
+// No necesitas el id_cliente, MySQL lo genera automáticamente
 $nombre         = $_POST['nombre'];
 $email          = $_POST['email'];
 $telefono       = $_POST['telefono'];
@@ -12,10 +13,9 @@ $direccion      = $_POST['direccion'];
 $ciudad         = $_POST['ciudad'];
 $estado         = $_POST['estado'];
 $codigo_postal  = $_POST['codigo_postal'];
-$fecha_registro  = $_POST['fecha_registro'];
+$fecha_registro = $_POST['fecha_registro'];
 $estatus        = $_POST['estatus'];
 
-// Usa un try-catch si quieres más control
 $sql = "INSERT INTO clientes (
     nombre, email, telefono, direccion, ciudad, estado, codigo_postal, fecha_registro, estatus
 ) VALUES (
@@ -24,8 +24,9 @@ $sql = "INSERT INTO clientes (
 )";
 
 if (mysqli_query($con, $sql)) {
-    header("location: clientes.php");
+    header("Location: clientes.php");
     exit();
 } else {
-    echo "Error al insertar: " . mysqli_error($con);
+    echo "❌ Error al insertar: " . mysqli_error($con);
 }
+?>

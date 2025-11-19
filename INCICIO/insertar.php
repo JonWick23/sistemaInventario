@@ -2,23 +2,25 @@
 include("conexion.php");
 $con = conectar();
 
-$id_producto   = $_POST['id_producto'];
+
+$codigo_articulo = $_POST['codigo_articulo'];
 $nombre        = $_POST['nombre'];
 $categoria     = $_POST['categoria'];
 $cantidad      = $_POST['cantidad'];
 $precio_compra = $_POST['precio_compra'];
 $precio_venta  = $_POST['precio_venta'];
-$provedor      = $_POST['provedor'];
+$proveedor      = $_POST['proveedor'];
 $fecha_ingreso = $_POST['fecha_ingreso'];
 $ubicacion     = $_POST['ubicacion'];
 $estado        = $_POST['estado'];
 
+
 // Usa un try-catch si quieres más control
-$sql = "INSERT INTO producto (
-    id_producto, nombre, categoria, cantidad, precio_compra, precio_venta, provedor, fecha_ingreso, ubicacion, estado
+$sql = "INSERT INTO Productos (
+    codigo_articulo, nombre, categoria, cantidad, precio_compra, precio_venta, proveedor, fecha_ingreso, ubicacion, estado
 ) VALUES (
-    '$id_producto', '$nombre', '$categoria', '$cantidad', '$precio_compra', '$precio_venta',
-    '$provedor', '$fecha_ingreso', '$ubicacion', '$estado'
+    '$codigo_articulo', '$nombre', '$categoria', '$cantidad', '$precio_compra', '$precio_venta',
+    '$proveedor', '$fecha_ingreso', '$ubicacion', '$estado'
 )";
 
 if (mysqli_query($con, $sql)) {
