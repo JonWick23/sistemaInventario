@@ -35,16 +35,9 @@ $query = mysqli_query($conexion, $sql);
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="usuario">
-            <?php echo $_SESSION["nombre"]. " " .$_SESSION["apellido"]; ?>
-        </div>
-        <div class="menu">
-            <a href="alumno.php">Productos</a>
-            <a href="logout.php" class="btn-salir">Salir</a>
-        </div>
-    </nav>
+    <?php 
+    include("menu.php");
+    ?>
 
     <div class="container">
         <div class="formulario">

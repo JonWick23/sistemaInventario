@@ -46,7 +46,7 @@ $query = mysqli_query($conexion, $sql);
     <div class="informacion">
         <div class="cuadro1">
             <span class="icono-producto"><i class="fas fa-box"></i></span>
-            <h2>Total de Productos</h2>
+            <h2>Total de Productos<br> en el inventario</h2>
             <p><?php echo $total_registros; ?></p>
         </div>
 
@@ -128,10 +128,37 @@ $query = mysqli_query($conexion, $sql);
             <input type="submit" value="GUARDAR PRODUCTO">
         </form>
     </div>
-    
+
+
+     <!-- BUSCADOR -->
+    <form action='' method='POST'>
+        <div class="input-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" name="buscar" placeholder="Buscar producto por código, nombre o categoría">
+                <button type="submit" class="btnBuscar">Buscar</button>
+        </div>
+    </form>
+
+    <?php
+        if (!empty($_POST['buscar'])) {
+
+            $buscar = $_POST['buscar'];
+
+            $sql = "SELECT * FROM Productos 
+                    WHERE codigo_articulo LIKE '%$buscar%' 
+                    OR nombre LIKE '%$buscar%' OR categoria LIKE '%$buscar%'";
+
+            $query = mysqli_query($conexion, $sql);
+
+        } else {
+            $sql = "SELECT * FROM Productos LIMIT $inicio, $por_pagina";
+            $query = mysqli_query($conexion, $sql);
+        }
+    ?>
+
     <!-- TABLA DE PRODUCTOS -->
     <div class="table-container">
-        <table class="miTabla">
+        <table>
             <br>
             <thead>
                 <tr>
@@ -206,7 +233,6 @@ $query = mysqli_query($conexion, $sql);
         </div>
     </div>
 
-    <script src="js/tabla.js"></script>
     <script src="js/maxNumeros.js"></script>
     <script src="js/modalOver.js"></script>
 </body>
