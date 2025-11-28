@@ -10,7 +10,6 @@
    <link href="https://tresplazas.com/web/img/big_punto_de_venta.png" rel="shortcut icon">
    <title>Inicio de sesión</title>
    <link rel="icon" href="img/ico_logo.png">
-   <link rel="stylesheet" href="estiloo.css">
 </head>
 
 <body>
@@ -24,8 +23,8 @@
             <img src="img/avatar.svg">
             <h2 class="title">BIENVENIDO</h2>
             <?php
-                include ("db.php");
-                include ("validar.php");
+                include ("control/db.php");
+                include ("control/validar.php");
             ?>
             <div class="input-div one">
                <div class="i">

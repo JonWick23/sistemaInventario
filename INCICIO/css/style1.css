@@ -33,8 +33,6 @@ header {
     transform: translate(-50%, -50%);
 }
 
-
-
 .scroll {
     height: 50px;
 }
@@ -110,7 +108,7 @@ header {
     display: block; 
 }
 
-#formularioVenta input[type="text"], #formularioVenta input[type="date"], #formularioVenta input[type="number"] {
+#formularioVenta input[type="text"], #formularioVenta input[type="date"], #formularioVenta input[type="number"],  #formularioVenta input[type="email"]{
     background-color: rgba(59, 63, 92, .7);   
     color: #fff;
     padding: 12px;
@@ -150,15 +148,83 @@ header {
     margin-left: 81%;
 }
 
-.informacion{
+/*CUADROS 1, 2 Y 3*/
+.informacion {
     display: flex;
-    justify-content: center; 
-    margin-left: auto;
-    margin-right: auto;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 30px 10%; 
     margin-top: 40px;
-    max-width: 90%;
-    gap: 5%;
 }
+
+.informacion > div {
+    background: #ffffff; 
+    flex: 1;             
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;  
+    box-shadow: 0 10px 30px rgba(59, 63, 92, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(59, 63, 92, 0.05); 
+    overflow: hidden; 
+}
+
+.informacion > div:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 35px rgba(34, 135, 197, 0.2); 
+}
+
+.informacion h2 {
+    color: #3b3f5c; 
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    opacity: 0.8; 
+}
+
+.informacion p:nth-of-type(1) {
+    color: #2287c5; 
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.informacion p:nth-of-type(2) {
+    color: #3b3f5c;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-top: 5px;
+}
+
+.informacion span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #2287c5, #1b6ca8); 
+    color: white;
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 5px 15px rgba(34, 135, 197, 0.3);
+}
+
+.informacion > div::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: rgba(34, 135, 197, 0.05); 
+    border-radius: 50%;
+    z-index: 0;
+}
+
 .cuadro1, .cuadro2, .cuadro3{
     position: relative;
     display: flex;
@@ -166,9 +232,9 @@ header {
     justify-content: center;
     padding: 30px; 
     text-align: left;
-    color: #f0f0f0;
+    color: black;
     border-radius: 20px;
-    background-color: #0094FF;
+    background-color: #ffffff;
     border-color: #f0f0f0;
     width: 25%;
     height: 200px;
@@ -338,15 +404,7 @@ select, option{
     margin-top: 30px; 
     border-radius: 5px; 
     border: none; /* (Añadido para que se vea limpio) */
-    
-    /* --- CORRECCIÓN --- */
-    /* 1. Elimina la línea de grid-column */
-    /* grid-column: 1 / span 3; */ 
-    
-    /* 2. Añade width 100% para que ocupe todo el ancho */
     width: 100%;
-    
-    /* 3. (Opcional) Ajusta el tamaño de fuente si es necesario */
     font-size: 16px; 
 }
 
@@ -354,59 +412,81 @@ select, option{
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 .table-container {
-    margin: 1%;    
-    width: auto;
+    margin: 1%;
+    padding: 10px;
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    overflow: hidden; /* Esto es importante para que el border-radius afecte a la cabecera */
-    overflow-x: scroll; /* Permite el scroll vertical si la tabla es muy larga */
-    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
 }
 
+/* TABLA MÁS COMPACTA */
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px; /* Más pequeño */
 }
 
 th, td {
-    padding: 15px 20px;
-    text-align: left;
+    padding: 10px 12px; /* Menos padding */
+    text-align: center; /* Mejor distribución */
 }
 
 td {
-    color: black;
+    color: #333;
 }
 
 thead {
     background-color: #3b3f5c;
-    color: #f0f0f0;
+    color: #fff;
 }
 
 th {
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: bold;
     text-transform: uppercase;
-    font-size: 12px;
 }
 
 tbody tr {
-    border-bottom: 1px solid #f0f0f0;
-}
-
-tbody tr:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 tbody tr:hover {
-    background-color: #f5f5f5;
+    background-color: #f0f4ff; /* Un hover suave */
 }
 
+/* BOTONES MÁS COMPACTOS */
+.btn-eliminar,
+.btn-modificar {
+    width: 70px;
+    height: 28px;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 8px;
+}
 
-/* Large Screen */
-@media (min-width: 700px) { /* Asumiendo que 700px es el punto de quiebre */
-    .contact-wrapper {
-        display: grid;
-        grid-template-columns: 3fr;
+/* MEJORES ACCIONES */
+.botones_m_e {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* RESPONSIVE: TABLA EN MÓVIL */
+@media (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    .btn-eliminar,
+    .btn-modificar {
+        width: 60px;
+        height: 26px;
+        font-size: 11px;
     }
 }
 
@@ -458,8 +538,6 @@ tbody tr:hover {
         font-size: 14px;
     }
 }
-
-
 
 /* Caja de entrada */
 .input-box {
@@ -539,13 +617,43 @@ tbody tr:hover {
     text-decoration: underline;
 }
 
-:root {
-	--exito: #3ab65c;
-	--error: #bf333b;
-	--info: #1898c0;
-	--warning: #bc8c12;
-	--exito-hover: #2d8a46;
-	--error-hover: #962a31;
-	--info-hover: #147fa0;
-	--warning-hover: #9b7512;
+/* Estilos para mensajes de error */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 22px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    min-width: 260px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all .4s ease;
+    z-index: 9999;
 }
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.toast.insertado {
+    background-color: #4CAF50;
+}
+
+.toast.eliminado {
+    background-color: #E53935;
+}
+
+.imag{
+    width: 60%;
+    height: 20em;
+    max-width: 100%;
+    display: block;
+
+}
+
