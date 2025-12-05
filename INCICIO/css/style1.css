@@ -657,3 +657,114 @@ tbody tr:hover {
 
 }
 
+.con-inicio{
+    text-align: center;
+    margin-top: 100px;
+    color: #3b3f5c;
+    background-color:aliceblue;
+    border-radius: 2rem;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+
+/* CONTENEDOR PRINCIPAL */
+.inicio-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* HERO SECTION */
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background: #f5f9ff;
+    padding: 30px;
+    border-radius: 14px;
+}
+
+.hero-text h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+    color: #1f3b6e;
+}
+
+.hero-text p {
+    margin: 0;
+    font-size: 17px;
+    color: #55627a;
+}
+
+.hero-img img {
+    width: 360px;
+    height: auto;
+}
+
+/* TARJETAS */
+.stats {
+    margin-top: 35px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 22px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #374460;
+}
+
+.stat-card span {
+    font-size: 30px;
+    color: #1f3b6e;
+    font-weight: bold;
+}
+
+/* SECCIÓN INFERIOR */
+.info {
+    margin-top: 40px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.info h2 {
+    margin: 0 0 10px;
+    color: #1f3b6e;
+}
+
+.info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #58657d;
+}
+
+.info ul li {
+    margin-bottom: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-img img {
+        width: 260px;
+    }
+}

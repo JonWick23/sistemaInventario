@@ -45,7 +45,7 @@ $query = mysqli_query($conexion, $sql);
 
     <!-- MODAL REGISTRO CLIENTE -->
     <div id="modalOverlay" class="modal-overlay">
-        <form action="insertar_cliente.php" method="POST" id="formularioVenta">
+        <form action="control/insertar_cliente.php" method="POST" id="formularioVenta">
             <span id="btnCerrarModal" class="cerrar-modal">&times;</span>
 
             <div class="campo">

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['nombre']) and empty($_SESSION['apellido'])) {
+if (empty($_SESSION['nombre']) && empty($_SESSION['apellido'])) {
     header("location: index.php");
 }
 
@@ -8,18 +8,30 @@ include("control/conexion.php");
 $conexion = conectar();
 
 // ===== PAGINADO =====
-$por_pagina = 10; 
+$por_pagina = 10;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $inicio = ($pagina - 1) * $por_pagina;
 
-// Total de registros
-$total_query = mysqli_query($conexion, "SELECT COUNT(*) as total FROM Productos");
+// ===== BUSCADOR =====
+$buscar = "";
+$condicion = "";
+
+if (!empty($_POST['buscar'])) {
+    $buscar = mysqli_real_escape_string($conexion, $_POST['buscar']);
+    $condicion = "WHERE codigo_articulo LIKE '%$buscar%' 
+                  OR nombre LIKE '%$buscar%' 
+                  OR categoria LIKE '%$buscar%'";
+}
+
+// Total registros
+$total_query = mysqli_query($conexion, "SELECT COUNT(*) AS total FROM Productos $condicion");
 $total_row = mysqli_fetch_assoc($total_query);
 $total_registros = $total_row['total'];
+
 $total_paginas = ceil($total_registros / $por_pagina);
 
 // Consulta con límite
-$sql = "SELECT * FROM Productos LIMIT $inicio, $por_pagina";
+$sql = "SELECT * FROM Productos $condicion LIMIT $inicio, $por_pagina";
 $query = mysqli_query($conexion, $sql);
 ?>
 
@@ -149,23 +161,6 @@ $query = mysqli_query($conexion, $sql);
         </div>
     </form>
 
-    <?php
-        if (!empty($_POST['buscar'])) {
-            $buscar = $_POST['buscar'];
-
-            $sql = "SELECT * FROM Productos 
-                    WHERE codigo_articulo LIKE '%$buscar%' 
-                    OR nombre LIKE '%$buscar%' 
-                    OR categoria LIKE '%$buscar%'";
-
-            $query = mysqli_query($conexion, $sql);
-
-        } else {
-            $sql = "SELECT * FROM Productos LIMIT $inicio, $por_pagina";
-            $query = mysqli_query($conexion, $sql);
-        }
-    ?>
-
     <!-- TABLA DE PRODUCTOS -->
     <div class="table-container">
 
@@ -190,41 +185,43 @@ $query = mysqli_query($conexion, $sql);
             <tbody>
 
                 <?php
-                    $subtotal_compra = 0;
-                    $subtotal_venta  = 0;
+                $subtotal_compra = 0;
+                $subtotal_venta  = 0;
 
-                    while ($row = mysqli_fetch_array($query)) {
-                        $subtotal_compra += $row['precio_compra'] * $row['cantidad'];
-                        $subtotal_venta  += $row['precio_venta'] * $row['cantidad'];
+                while ($row = mysqli_fetch_array($query)) {
+
+                    // Subtotales
+                    $subtotal_compra += $row['precio_compra'] * $row['cantidad'];
+                    $subtotal_venta  += $row['precio_venta'] * $row['cantidad'];
                 ?>
-
                 <tr>
-                    <td><?php echo $row['id_productos']; ?></td>
-                    <td><?php echo $row['codigo_articulo']; ?></td>
-                    <td><?php echo $row['nombre']; ?></td>
-                    <td><?php echo $row['categoria']; ?></td>
-                    <td><?php echo $row['cantidad']; ?></td>
-                    <td>$<?php echo number_format($row['precio_compra'], 2); ?></td>
-                    <td>$<?php echo number_format($row['precio_venta'], 2); ?></td>
-                    <td><?php echo $row['proveedor']; ?></td>
-                    <td><?php echo $row['fecha_ingreso']; ?></td>
-                    <td><?php echo $row['ubicacion']; ?></td>
-                    <td><?php echo $row['estado']; ?></td>
+                    <td><?= $row['id_productos'] ?></td>
+                    <td><?= $row['codigo_articulo'] ?></td>
+                    <td><?= $row['nombre'] ?></td>
+                    <td><?= $row['categoria'] ?></td>
+                    <td><?= $row['cantidad'] ?></td>
+                    <td>$<?= number_format($row['precio_compra'], 2) ?></td>
+                    <td>$<?= number_format($row['precio_venta'], 2) ?></td>
+                    <td><?= $row['proveedor'] ?></td>
+                    <td><?= $row['fecha_ingreso'] ?></td>
+                    <td><?= $row['ubicacion'] ?></td>
+                    <td><?= $row['estado'] ?></td>
 
                     <!-- BOTÓN MODIFICAR -->
                     <td>
-                        <button class="btn-modificar" onclick="abrirEditar(
-                            '<?php echo $row['id_productos']; ?>',
-                            '<?php echo $row['codigo_articulo']; ?>',
-                            '<?php echo $row['nombre']; ?>',
-                            '<?php echo $row['categoria']; ?>',
-                            '<?php echo $row['cantidad']; ?>',
-                            '<?php echo $row['precio_compra']; ?>',
-                            '<?php echo $row['precio_venta']; ?>',
-                            '<?php echo $row['proveedor']; ?>',
-                            '<?php echo $row['fecha_ingreso']; ?>',
-                            '<?php echo $row['ubicacion']; ?>',
-                            '<?php echo $row['estado']; ?>'
+                        <button class="btn-modificar" 
+                        onclick="abrirEditar(
+                            '<?= htmlspecialchars($row['id_productos'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['codigo_articulo'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['nombre'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['categoria'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['cantidad'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['precio_compra'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['precio_venta'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['proveedor'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['fecha_ingreso'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['ubicacion'], ENT_QUOTES) ?>',
+                            '<?= htmlspecialchars($row['estado'], ENT_QUOTES) ?>'
                         )">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
@@ -234,7 +231,7 @@ $query = mysqli_query($conexion, $sql);
                     <td>
                         <button class="btn-eliminar"
                             onclick="if (confirm('¿Seguro que deseas eliminar?')) { 
-                                window.location.href='control/delete.php?id=<?php echo $row['id_productos']; ?>';
+                                window.location.href='control/delete.php?id=<?= $row['id_productos'] ?>';
                             }">
                             <i class="fa-solid fa-trash"></i>
                         </button>
@@ -242,60 +239,14 @@ $query = mysqli_query($conexion, $sql);
                 </tr>
 
                 <?php } ?>
-
-                <!-- MODAL EDITAR -->
-                <div id="modalEditar" class="modal-overlay">
-                    <form action="update.php" method="POST" id="formularioVenta">
-                        <span id="btnCerrarEditar" class="cerrar-modal">&times;</span>
-
-                        <input type="hidden" name="id_productos" id="edit_id">
-
-                        <label>Código:</label>
-                        <input type="text" name="codigo_articulo" id="edit_codigo" required>
-
-                        <label>Nombre:</label>
-                        <input type="text" name="nombre" id="edit_nombre" required>
-
-                        <label>Categoría:</label>
-                        <input type="text" name="categoria" id="edit_categoria" required>
-
-                        <label>Cantidad:</label>
-                        <input type="number" name="cantidad" id="edit_cantidad" required>
-
-                        <label>Precio Compra:</label>
-                        <input type="number" name="precio_compra" id="edit_precio_compra" required>
-
-                        <label>Precio Venta:</label>
-                        <input type="number" name="precio_venta" id="edit_precio_venta" required>
-
-                        <label>Proveedor:</label>
-                        <input type="text" name="proveedor" id="edit_proveedor" required>
-
-                        <label>Fecha Ingreso:</label>
-                        <input type="date" name="fecha_ingreso" id="edit_fecha" required>
-
-                        <label>Ubicación:</label>
-                        <input type="text" name="ubicacion" id="edit_ubicacion" required>
-
-                        <label>Estado:</label>
-                        <select name="estado" id="edit_estado">
-                            <option value="Disponible">Disponible</option>
-                            <option value="Agotado">Agotado</option>
-                            <option value="Baja">Baja</option>
-                        </select>
-
-                        <button type="submit">Actualizar</button>
-                    </form>
-                </div>
-
             </tbody>
 
             <tfoot>
                 <tr>
                     <th>Subtotal</th>
                     <th colspan="4"></th>
-                    <th>$<?php echo number_format($subtotal_compra, 2); ?></th>
-                    <th>$<?php echo number_format($subtotal_venta, 2); ?></th>
+                    <th>$<?= number_format($subtotal_compra, 2) ?></th>
+                    <th>$<?= number_format($subtotal_venta, 2) ?></th>
                     <th colspan="6"></th>
                 </tr>
             </tfoot>
@@ -304,32 +255,142 @@ $query = mysqli_query($conexion, $sql);
         <!-- PAGINACIÓN -->
         <div class="paginacion">
             <?php if ($pagina > 1): ?>
-                <a href="?pagina=<?php echo $pagina - 1; ?>">&laquo; Anterior</a>
+                <a href="?pagina=<?= $pagina - 1 ?>">&laquo; Anterior</a>
             <?php endif; ?>
 
             <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                <a href="?pagina=<?php echo $i; ?>" class="<?php echo $i == $pagina ? 'activo' : ''; ?>">
-                    <?php echo $i; ?>
+                <a href="?pagina=<?= $i ?>" class="<?= $i == $pagina ? 'activo' : '' ?>">
+                    <?= $i ?>
                 </a>
             <?php endfor; ?>
 
             <?php if ($pagina < $total_paginas): ?>
-                <a href="?pagina=<?php echo $pagina + 1; ?>">Siguiente &raquo;</a>
+                <a href="?pagina=<?= $pagina + 1 ?>">Siguiente &raquo;</a>
             <?php endif; ?>
         </div>
     </div>
 
-    <!-- ALERTA -->
-    <?php if (isset($_GET['msg'])): ?>
-        <div id="toast" class="toast <?php echo $_GET['msg']; ?>">
-            <?php echo $_GET['msg'] == 'exito' ? 'Producto eliminado exitosamente' : 'Error al eliminar el producto'; ?>
-        </div>
-    <?php endif; ?>
+    <!-- MODAL EDITAR PRODUCTO -->
+<div id="modalEditar" class="modal-overlay">
+    <form action="control/update.php" method="POST" id="formularioEditar" class="modal-content">
+        <span id="btnCerrarEditar" class="cerrar-modal">&times;</span>
 
-    <!-- JS -->
+        <h2 class="titulo-modal">EDITAR PRODUCTO</h2>
+
+        <input type="hidden" name="id_productos" id="edit_id">
+
+        <div class="campo">
+            <label for="edit_codigo">CÓDIGO DEL ARTÍCULO:</label>
+            <input type="text" name="codigo_articulo" id="edit_codigo" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_nombre">NOMBRE:</label>
+            <input type="text" name="nombre" id="edit_nombre" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_categoria">CATEGORÍA:</label>
+            <input type="text" name="categoria" id="edit_categoria" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_cantidad">CANTIDAD:</label>
+            <input type="number" name="cantidad" id="edit_cantidad" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_precio_compra">PRECIO COMPRA:</label>
+            <input type="number" name="precio_compra" id="edit_precio_compra" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_precio_venta">PRECIO VENTA:</label>
+            <input type="number" name="precio_venta" id="edit_precio_venta" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_proveedor">PROVEEDOR:</label>
+            <input type="text" name="proveedor" id="edit_proveedor" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_fecha">FECHA INGRESO:</label>
+            <input type="date" name="fecha_ingreso" id="edit_fecha" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_ubicacion">UBICACIÓN:</label>
+            <input type="text" name="ubicacion" id="edit_ubicacion" required>
+        </div>
+
+        <div class="campo">
+            <label for="edit_estado">ESTADO:</label>
+            <select name="estado" id="edit_estado" required>
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
+                <option value="Baja">Baja</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-guardar">ACTUALIZAR PRODUCTO</button>
+
+    </form>
+</div>
+
+
+     <!-- ALERTA -->
+    <?php if (isset($_GET['msg'])): ?>
+
+    <?php
+        $msg = $_GET['msg'];
+        $texto = "";
+        $clase = "";
+
+        switch ($msg) {
+            case "insert_ok":
+                $texto = "Insertado correctamente";
+                $clase = "insertado"; // Verde
+                break;
+            case "insert_error":
+                $texto = "No se pudo insertar";
+                $clase = "eliminado"; // Rojo
+                break;
+
+            case "delete_ok":
+                $texto = "Eliminación correcta";
+                $clase = "insertado"; // Verde
+                break;
+            case "delete_error":
+                $texto = "Error al eliminar";
+                $clase = "eliminado"; // Rojo
+                break;
+
+            case "update_ok":
+                $texto = "Actualizado correctamente";
+                $clase = "insertado"; // Verde
+                break;
+            case "update_error":
+                $texto = "Error al actualizar";
+                $clase = "eliminado"; // Rojo
+                break;
+        }
+    ?>
+
+    <div id="toast" class="toast <?= $clase ?>">
+        <?= $texto ?>
+    </div>
+
+<?php endif; ?>
+
+
+
+
+    <!-- SCRIPTS -->
     <script src="js/toast.js"></script>
     <script src="js/maxNumeros.js"></script>
     <script src="js/modalOvar.js"></script>
+    <script src="js/modalEditar.js"></script>
 
 </body>
 </html>

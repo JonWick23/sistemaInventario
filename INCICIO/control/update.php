@@ -30,9 +30,10 @@ $sql = "UPDATE Productos
 $query = mysqli_query($con, $sql);
 
 if ($query) {
-    Header("Location: ../alumno.php");
-    exit();
+    header("Location: ../alumno.php?msg=update_ok");
 } else {
-    echo "Error al actualizar: " . mysqli_error($con);
+    header("Location: ../alumno.php?msg=update_error");
 }
+exit();
+
 ?>

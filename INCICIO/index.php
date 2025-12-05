@@ -9,7 +9,7 @@
    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
    <link href="https://tresplazas.com/web/img/big_punto_de_venta.png" rel="shortcut icon">
    <title>Inicio de sesión</title>
-   <link rel="icon" href="img/ico_logo.png">
+   <link rel="icon" href="img/login.png">
 </head>
 
 <body>

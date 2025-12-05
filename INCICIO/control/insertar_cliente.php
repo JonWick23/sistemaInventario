@@ -24,9 +24,10 @@ $sql = "INSERT INTO clientes (
 )";
 
 if (mysqli_query($con, $sql)) {
-    header("Location: ./clientes.php");
-    exit();
+    header("Location: ../alumno.php?msg=insert_ok");
 } else {
-    echo "❌ Error al insertar: " . mysqli_error($con);
+    header("Location: ../alumno.php?msg=insert_error");
 }
+
+exit();
 ?>

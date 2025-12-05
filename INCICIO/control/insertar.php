@@ -24,12 +24,11 @@ $sql = "INSERT INTO Productos (
 )";
 
 if (mysqli_query($con, $sql)) {
-    echo'<script type="text/javascript">
-    alert("Se guardado correctamente");
-    window.location.href="../alumno.php";
-    </script>';
-   
+    header("Location: ../alumno.php?msg=insert_ok");
 } else {
-    echo "Error al insertar: " . mysqli_error($con);
+    header("Location: ../alumno.php?msg=insert_error");
 }
+
+exit();
+
 ?>

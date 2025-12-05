@@ -1,0 +1,68 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #1a1a2e;
+    font-family: sans-serif;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    position: relative;
+}
+
+.loader:before,
+.loader:after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: pulsOut 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 1rem rgba(149, 128, 255, 0.75));
+}
+
+.loader:before {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(149, 128, 255, 0.15);
+    animation-delay: 0.5s;
+}
+
+.loader:after {
+    width: 75%;
+    height: 75%;
+    background-color: rgba(149, 128, 255, 0.5);
+    top: 12.5%;
+    left: 12.5%;
+}
+
+@keyframes pulsOut {
+    0%, 100% { transform: scale(0); }
+    50% { transform: scale(1); }
+}
+
+.loading-text {
+    color: #e0e0e0;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: #16213e;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.progress {
+    height: 100%;
+    background: #9580ff;
+    width: 0%;
+    transition: width 0.5s ease;
+}

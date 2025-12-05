@@ -21,7 +21,7 @@
     </a>
 
     <ul class="submenu-items" id="submenuItems">
-        <li><a href="#">ACERCA DE</a></li>
+        <li><a href="acerca-de.php">ACERCA DE</a></li>
         <li><a href="control/logout.php">Salir</a></li>
     </ul>
 </li>
